@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل دوال الرسوميات الشامل  - إصدار 2.5</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet" />
+    <!-- إضافة مكتبة أيقونات للسهم -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        :root {
+            --main-color: #004d40; /* لون أخضر داكن احترافي */
+            --accent-color: #00796b;
+            --bg-light: #f4fcfc;
+            --border-color: #b2dfdb;
+        }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
+        
+        body {
+            font-family: 'Segoe UI', 'Simplified Arabic', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+            max-width: 210mm;
+            margin: 0 auto;
+            padding: 20px;
+            padding-bottom: 80px; /* مساحة للزر العائم */
+        }
+
+        /* Cover Page */
+        .cover-page {
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border-bottom: 2px solid var(--accent-color);
+            margin-bottom: 50px;
+            page-break-after: always;
+            background: linear-gradient(135deg, #e0f2f1 0%, #ffffff 100%);
+        }
+        
+        .cover-page h1 { font-size: 3rem; color: var(--main-color); margin-bottom: 10px; }
+        .cover-page p { font-size: 1.3rem; color: #555; }
+        .badge { background: var(--main-color); color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.9rem; margin-top: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+
+        /* Group Headers */
+        .group-header {
+            background: var(--main-color);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin: 50px 0 20px 0;
+            font-size: 1.6rem;
+            border-right: 10px solid #00251a;
+            page-break-after: avoid;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        /* Function Card Style */
+        .function-card {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background: var(--bg-light);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            page-break-inside: avoid;
+        }
+
+        .func-title {
+            color: var(--main-color);
+            font-size: 1.5rem;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+            direction: ltr;
+            text-align: right;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .func-number {
+            background: var(--accent-color);
+            color: white;
+            font-family: sans-serif;
+            font-size: 0.8rem;
+            padding: 4px 10px;
+            border-radius: 4px;
+        }
+
+        .info-grid { display: grid; gap: 10px; }
+        .info-item { display: grid; grid-template-columns: 120px 1fr; align-items: baseline; }
+        .label { font-weight: bold; color: var(--main-color); font-size: 0.95rem; }
+
+        .syntax-box {
+            font-family: 'Courier New', monospace;
+            background: #e0f2f1; /* لون فاتح لخلفية الكود */
+            padding: 4px 8px;
+            border-radius: 4px;
+            direction: ltr;
+            display: inline-block;
+            color: #004d40;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .params-list { list-style: none; padding-right: 0; }
+        .params-list li { margin-bottom: 5px; }
+        .params-list li::before { content: "•"; color: #ff9800; margin-left: 8px; font-weight: bold; }
+        
+        .note-text { 
+            color: #856404; 
+            background-color: #fff3cd; 
+            padding: 8px; 
+            border-radius: 4px; 
+            font-size: 0.9rem; 
+            border-right: 3px solid #ffc107;
+            margin-top: 10px;
+            grid-column: 1 / -1; /* تجعل الملاحظات تأخذ عرض السطر بالكامل */
+        }
+
+        /* Code Block */
+        pre[class*="language-"] {
+            margin: 15px 0 0 0 !important;
+            padding: 10px !important;
+            background: #f1f8e9 !important;
+            border: 1px solid #dcedc8;
+            border-radius: 6px;
+            font-size: 0.85rem !important;
+            direction: ltr;
+            text-align: left;
+        }
+        
+        .example-label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* TOC */
+        .toc { background: var(--bg-light); padding: 30px; border-radius: 10px; margin-bottom: 50px; border: 1px solid var(--border-color); }
+        .toc h2 { color: var(--main-color); margin-bottom: 20px; text-align: center; }
+        .toc-list { 
+            columns: 2; 
+            -webkit-columns: 2; 
+            -moz-columns: 2;
+            list-style: none; 
+        }
+        .toc-list li { margin-bottom: 5px; break-inside: avoid; }
+        .toc-list a { text-decoration: none; color: #333; transition: 0.2s; }
+        .toc-list a:hover { color: var(--accent-color); font-weight: bold; }
+        .toc-category { font-weight: bold; color: #00796b; margin-top: 15px; display: block; break-after: avoid; font-size: 1.1rem; }
+        
+        /* Theory Section */
+        .theory-summary { margin-top: 80px; }
+        .theory-summary h2 { color: var(--main-color); font-size: 2rem; border-bottom: 3px solid var(--accent-color); padding-bottom: 10px; margin-bottom: 30px; }
+        .theory-summary h3 { color: #00796b; font-size: 1.4rem; margin-top: 25px; margin-bottom: 15px; border-right: 5px solid #b2dfdb; padding-right: 10px; }
+        .theory-summary p, .theory-summary ul { margin-bottom: 15px; padding-right: 10px; }
+        .theory-summary ul { list-style: circle; padding-right: 30px; }
+        .theory-summary li { margin-bottom: 5px; }
+
+        /* Scroll to Top Button */
+        #scrollTopBtn {
+            display: none; /* مخفي افتراضياً */
+            position: fixed;
+            bottom: 30px;
+            left: 30px; /* يسار الشاشة لتناسب الاتجاه العربي */
+            z-index: 99;
+            border: none;
+            outline: none;
+            background-color: var(--accent-color);
+            color: white;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 50%;
+            font-size: 18px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        #scrollTopBtn:hover {
+            background-color: var(--main-color);
+            transform: translateY(-5px);
+        }
+
+        @media print {
+            body { padding: 0; max-width: 100%; min-width:  100%; }
+            .group-header { page-break-before: always; margin-top: 20px; }
+            .cover-page { height: 100vh; }
+            .function-card { break-inside: avoid; }
+            .toc, #scrollTopBtn { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- زر الصعود للأعلى -->
+    <button onclick="topFunction()" id="scrollTopBtn" title="العودة للأعلى">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- صفحة الغلاف -->
+    <div class="cover-page">
+        <h1>المرجع الشامل لدوال الرسوميات</h1>
+        <p> دليل مُبسط ومُرتب لدوال مكتبة <span class="syntax-box">graphics.h (6)</span></p>
+        <p>إعداد: bit-soft</p>
+        <span class="badge">الإصدار 3.1 (شامل التحديثات)</span>
+    </div>
+
+    <!-- الفهرس -->
+    <div class="toc">
+        <h2>فهرس الدوال</h2>
+        <ul class="toc-list">
+            <span class="toc-category">1. التهيئة والتحكم</span>
+            <li>1. <a href="#f1">initgraph</a></li>
+            <li>2. <a href="#f2">closegraph</a></li>
+            <li>3. <a href="#f3">cleardevice</a></li>
+            <li>4. <a href="#f4">delay</a></li>
+            
+            <span class="toc-category">2. خصائص الشاشة</span>
+            <li>5. <a href="#f5">getmaxx</a></li>
+            <li>6. <a href="#f6">getmaxy</a></li>
+            <li>7. <a href="#f7">getmaxcolor</a></li>
+            <li>8. <a href="#f8">getx</a></li>
+            <li>9. <a href="#f9">gety</a></li>
+            <li>10. <a href="#f10">getpixel</a></li>
+
+            <span class="toc-category">3. الألوان والتعبئة</span>
+            <li>11. <a href="#f11">setcolor</a></li>
+            <li>12. <a href="#f12">setbkcolor</a></li>
+            <li>13. <a href="#f13">getcolor</a></li>
+            <li>14. <a href="#f14">getbkcolor</a></li>
+            <li>15. <a href="#f15">setfillstyle</a></li>
+            <li>16. <a href="#f16">floodfill</a></li>
+            <li>17. <a href="#f17">setpalette</a></li>
+
+            <span class="toc-category">4. حركة المؤشر</span>
+            <li>18. <a href="#f18">moveto</a></li>
+            <li>19. <a href="#f19">moverel</a></li>
+
+            <span class="toc-category">5. الرسم والأشكال</span>
+            <li>20. <a href="#f20">putpixel</a></li>
+            <li>21. <a href="#f21">line</a></li>
+            <li>22. <a href="#f22">lineto</a></li>
+            <li>23. <a href="#f23">linerel</a></li>
+            <li>24. <a href="#f24">rectangle</a></li>
+            <li>25. <a href="#f25">bar</a></li>
+            <li>26. <a href="#f26">bar3d</a> <span style="color:red; font-size:0.8em">(جديد)</span></li>
+            <li>27. <a href="#f27">circle</a></li>
+            <li>28. <a href="#f28">arc</a> <span style="color:red; font-size:0.8em">(جديد)</span></li>
+            <li>29. <a href="#f29">pieslice</a> <span style="color:red; font-size:0.8em">(جديد)</span></li>
+            <li>30. <a href="#f30">ellipse</a></li>
+            <li>31. <a href="#f31">fillellipse</a></li>
+            <li>32. <a href="#f32">sector</a> <span style="color:red; font-size:0.8em">(جديد)</span></li>
+            <li>33. <a href="#f33">drawpoly</a></li>
+            <li>34. <a href="#f34">fillpoly</a></li>
+            <li>35. <a href="#f35">setlinestyle</a></li>
+
+            <span class="toc-category">6. النصوص</span>
+            <li>36. <a href="#f36">outtext</a></li>
+            <li>37. <a href="#f37">outtextxy</a></li>
+            <li>38. <a href="#f38">settextstyle</a></li>
+            <li>39. <a href="#f39">textwidth</a></li>
+            <li>40. <a href="#f40">textheight</a></li>
+            <li>41. <a href="#f41">sprintf</a></li>
+        </ul>
+    </div>
+
+    <!-- المجموعة 1: التهيئة والتحكم -->
+    <div class="group-header">1. التهيئة والتحكم بالنظام</div>
+
+    <div class="function-card" id="f1">
+        <div class="func-title">initgraph <span class="func-number">1</span></div>
+        <div class="info-grid">
+            <div class="info-item"><span class="label">الفكرة:</span><span>لتشغيل وضع الرسوميات (Graphics Mode) وفتح النافذة.</span></div>
+            <div class="info-item"><span class="label">الشكل العام:</span><span class="syntax-box">initgraph(&gd, &gm, path);</span></div>
+            <div class="info-item"><span class="label">المعاملات:</span>
+                <ul class="params-list">
+                    <li><span class="syntax-box">&gd</span>: متغير لتحديد مشغّل الرسوميات (استخدم <span class="syntax-box">DETECT</span>).</li>
+                    <li><span class="syntax-box">&gm</span>: متغير لحالة وضع الرسوميات.</li>
+                    <li><span class="syntax-box">path</span>: مسار مجلد السائق <span class="syntax-box">BGI</span> (اتركه فارغاً <span class="syntax-box">""</span>).</li>
+                </ul>
+            </div>
+            <div class="note-text">ملاحظات: هذه أول دالة يجب استدعاؤها. إنها تهيئ بيئة الرسم.</div>
+        </div>
+        <span class="example-label">مثال بسيط:</span>
+        <pre><code class="language-c">int gd = DETECT, gm;
+initgraph(&gd, &gm, ""); // فتح شاشة الرسم</code></pre>
+    </div>
+
+    <div class="function-card" id="f2">
+        <div class="func-title">closegraph <span class="func-number">2</span></div>
+        <div class="info-grid">
+            <div class="info-item"><span class="label">الفكرة:</span><span>إغلاق نافذة الرسم وإنهاء وضع الجرافيكس.</span></div>
+            <div class="info-item"><span class="label">الشكل العام:</span><span class="syntax-box">closegraph();</span></div>
+            <div class="info-item"><span class="label">المعاملات:</span>
+                <ul class="params-list">
+                    <li>(لا يوجد)</li>
+                </ul>
+            </div>
+            <div class="note-text">ملاحظات: يجب استدعاؤها دائماً عند الانتهاء لتنظيف الذاكرة وإغلاق النافذة بشكل آمن.</div>
+        </div>
+        <span class="example-label">مثال بسيط:</span>
+        <pre><code class="language-c">delay(5000); // انتظر 5 ثوانٍ
+closegraph(); // إغلاق النافذة الآن</code></pre>
+    </div>
+
+    <div class="function-card" id="f3">
+        <div class="func-title">cleardevice <span class="func-number">3</span></div>
+        <div class="info-grid">
+            <div class="info-item"><span class="label">الفكرة:</span><span>مسح محتويات الشاشة بالكامل (بشكل أساسي لون الخلفية).</span></div>
+            <div class="info-item"><span class="label">الشكل العام:</span><span class="syntax-box">cleardevice();</span></div>
+            <div class="info-item"><span class="label">المعاملات:</span>
+                <ul class="params-list">
+                    <li>(لا يوجد)</li>
+                </ul>
+            </div>
+            <div class="note-text">ملاحظات: تُستخدم كثيراً عند الحاجة لمسح الشاشة وبدء رسم جديد، خاصة في الرسوم المتحركة.</div>
+        </div>
+        <span class="example-label">مثال بسيط:</span>
+        <pre><code class="language-c">circle(100, 100, 50); // رسم دائرة
+delay(1000);
+cleardevice(); // الدائرة اختفت الآن</code></pre>
+    </div>
+
+    <div class="function-card" id="f4">
+        <div class="func-title">delay <span class="func-number">4</span></div>
+        <div class="info-grid">
+            <div class="info-item"><span class="label">الفكرة:</span><span>إيقاف تنفيذ البرنامج مؤقتاً بالملي ثانية (ms).</span></div>
+            <div class="info-item"><span class="label">الشكل العام:</span><span class="syntax-box">delay(ms);</span></div>
+            <div class="info-item"><span class="label">المعاملات:</span>
+                <ul class="params-list">
+                    <li><span class="syntax-box">ms</span>: عدد الملي ثواني للإيقاف.</li>
+                </ul>
+            </div>
+            <div class="note-text">ملاحظات: تستخدم في الرسوم المتحركة لإبطاء الحركة وجعلها مرئية.</div>
+        </div>
+        <span class="example-label">مثال بسيط:</span>
+        <pre><code class="language-c">outtext("Wait...");
+delay(3000); // انتظر 3 ثوانٍ
+outtext("Go!");</code></pre>
+    </div>
+
+    <!-- المجموعة 2: خصائص الشاشة -->
+    <div class="group-header">2. خصائص الشاشة والإحداثيات</div>
+
+    <div class="function-card" id="f5">
+        <div class="func-title">getmaxx <span class="func-number">5</span></div>
+        <div class="info-grid">
+            <div class="info-item"><span class="label">الفكرة:</span><span>إرجاع أقصى إحداثي س <span dir="ltr">(X)</span> يمكن الوصول إليه على الشاشة.</span></div>
+            <div class="info-item"><span class="label">الشكل العام:</span><span class="syntax-box">int max_x = getmaxx();</span></div>
+            <div class="info-item"><span class="label">المعاملات:</span>
+                <ul class="params-list">
+                    <li>(لا يوجد)</li>
+                </ul>
+            </div>
+            <div class="note-text">ملاحظات: العرض الكلي للشاشة هو <span class="syntax-box">getmaxx() + 1</span>. تستخدم للتوسيط.</div>
+        </div>
+        <span class="example-label">مثال بسيط:</span>
+        <pre><code class="language-c">int center_x = getmaxx() / 2;
+circle(center_x, 100, 50); // رسم دائرة في المنتصف الأفقي</code></pre>
+    </div>
+
+    <div class="function-card" id="f6">
+        <div class="func-title">getmaxy <span class="func-number">6</span></div>
+        <div class="info-grid">
+            <div class="info-item"><span class="label">الفكرة:</span><span>إرجاع أقصى إحداثي ص <span dir="ltr">(Y)</span> يمكن الوصول إليه على الشاشة.</span></div>
+            <div class="info-item"><span class="label">الشكل العام:</span><span class="syntax-box">int max_y = getmaxy();</span></div>
+            <div class="info-item"><span class="label">المعاملات:</span>
+                <ul class="params-list">
+                    <li>(لا يوجد)</li>
+                </ul>
+            </div>
+            <div class="note-text">ملاحظات: تستخدم للتوسيط العمودي أو الرسم عند قاع الشاشة.</div>
+        </div>
+        <span class="example-label">مثال بسيط:</span>
+        <pre><code class="language-c">int center_y = getmaxy() / 2;
+circle(100, center_y, 50); // رسم دائرة في المنتصف العمودي</code></pre>
+    </div>
+
+    <div class="function-card" id="f7">
+        <div class="func-title">getmaxcolor <span class="func-number">7</span></div>
+        <div class="info-grid">
+            <div class="info-item"><span class="label">الفكرة:</span><span>إرجاع القيمة القصوى لأرقام الألوان المتاحة (عادةً 15).</span></div>
+            <div class="info-item"><span class="label">الشكل العام:</span><span class="syntax-box">int m = getmaxcolor();</span></div>
+            <div class="info-item"><span class="label">المعاملات:</span>
+                <ul class="params-list">
+                    <li>(لا يوجد)</li>
+                </ul>
+            </div>
+            <div class="note-text">ملاحظات: العدد الكلي للألوان هو <span class="syntax-box">getmaxcolor() + 1</span>.</div>
+        </div>
+        <span class="example-label">مثال بسيط:</span>
+        <pre><code class="language-c">int max_c = getmaxcolor();
+setcolor(max_c); // اختيار اللون الأقصى (الأبيض عادةً)</code></pre>
+    </div>
+
+    <div class="function-card" id="f8">
+        <div class="func-title">getx <span class="func-number">8</span></div>
+        <div class="info-grid">
+            <div class="info-item"><span class="label">الفكرة:</span><span>إرجاع إحداثي س <span dir="ltr">(X)</span> الحالي للمؤشر الرسومي <span dir="ltr">(CP)</span>.</span></div>
+            <div class="info-item"><span class="label">الشكل العام:</span><span class="syntax-box">int x = getx();</span></div>
+            <div class="info-item"><span class="label">المعاملات:</span>
+                <ul class="params-list">
+                    <li>(لا يوجد)</li>
+                </ul>
+            </div>
+            <div class="note-text">ملاحظات: يتم تحديث موقع المؤشر بعد أي دالة رسم تستخدمه (<span class="syntax-box">lineto</span>, <span class="syntax-box">outtext</span>).</div>
+        </div>
+        <span class="example-label">مثال بسيط:</span>
+        <pre><code class="language-c">moveto(150, 50);
+int current_x = getx(); // current_x = 150</code></pre>
+    </div>
+
+    <div class="function-card" id="f9">
+        <div class="func-title">gety <span class="func-number">9</span></div>
+        <div class="info-grid">
+            <div class="info-item"><span class="label">الفكرة:</span><span>إرجاع إحداثي ص <span dir="ltr">(Y)</span> الحالي للمؤشر الرسومي <span dir="ltr">(CP)</span>.</span></div>
+            <div class="info-item"><span class="label">الشكل العام:</span><span class="syntax-box">int y = gety();</span></div>
+            <div class="info-item"><span class="label">المعاملات:</span>
+                <ul class="params-list">
+                    <li>(لا يوجد)</li>
+                </ul>
+            </div>
+            <div class="note-text">ملاحظات: يسمح لك بمتابعة الرسم من حيث توقفت آخر مرة.</div>
+        </div>
+        <span class="example-label">مثال بسيط:</span>
+        <pre><code class="language-c">lineto(100, 100);
+int current_y = gety(); // current_y = 100</code></pre>
+    </div>
+
+    <div class="function-card" id="f10">
+        <div class="func-title">getpixel <span class="func-number">10</span></div>
+        <div class="info-grid">
+            <div class="info-item"><span class="label">الفكرة:</span><span>معرفة لون نقطة معينة في الشاشة (قيمة اللون).</span></div>
+            <div class="info-item"><span class="label">الشكل العام:</span><span class="syntax-box">int c = getpixel(x, y);</span></div>
+            <div class="info-item"><span class="label">المعاملات:</span>
+                <ul class="params-list">
+                    <li><span class="syntax-box">x, y</span>: إحداثيات النقطة المراد فحص لونها.</li>
+                </ul>
+            </div>
+            <div class="note-text">ملاحظات: مفيدة في ألعاب الاكتشاف أو عند الحاجة للتفاعل مع الألوان المرسومة.</div>
+        </div>
+        <span class="example-label">مثال بسيط:</span>
+        <pre><code class="language-c">putpixel(10, 10, RED);
+if (getpixel(10, 10) == RED) { /* ... */ } // شرط يتحقق</code></pre>
+    </div>
+
+    <!-- المجموعة 3: الألوان والتعبئة -->
+    <div class="group-header">3. الألوان والتعبئة</div>
+
+    <div class="function-card" id="f11">
+        <div class="func-title">setcolor <span class="func-number">11</span></div>
+        <div class="info-grid">
+            <div class="info-item"><span class="label">الفكرة:</span><span>تغيير لون الرسم الأمامي (القلم) للأشكال والنصوص القادمة.</span></div>
+            <div class="info-item"><span class="label">الشكل العام:</span><span class="syntax-box">setcolor(color);</span></div>
+            <div class="info-item"><span class="label">المعاملات:</span>
+                <ul class="params-list">
+                    <li><span class="syntax-box">color</span>: رقم اللون (من 0 إلى 15).</li>
+                </ul>
+            </div>
+            <div class="note-text">ملاحظات: هذا اللون سيستخدم في <span class="syntax-box">line</span>، <span class="syntax-box">circle</span>، <span class="syntax-box">outtext</span>، إلخ.</div>
+        </div>
+        <span class="example-label">مثال بسيط:</span>
+        <pre><code class="language-c">setcolor(BLUE); // اختيار اللون الأزرق
+line(0, 0, 100, 100); // رسم خط أزرق</code></pre>
+    </div>
+
+    <div class="function-card" id="f12">
+        <div class="func-title">setbkcolor <span class="func-number">12</span></div>
+        <div class="info-grid">
+            <div class="info-item"><span class="label">الفكرة:</span><span>تغيير لون خلفية الشاشة (Back Ground Color).</span></div>
+            <div class="info-item"><span class="label">الشكل العام:</span><span class="syntax-box">setbkcolor(color);</span></div>
+            <div class="info-item"><span class="label">المعاملات:</span>
+                <ul class="params-list">
+                    <li><span class="syntax-box">color</span>: رقم اللون.</li>
+                </ul>
+            </div>
+            <div class="note-text">ملاحظات: لتطبيق اللون الجديد، يجب استدعاء <span class="syntax-box">cleardevice()</span> أو <span class="syntax-box">bar()</span>.</div>
+        </div>
+        <span class="example-label">مثال بسيط:</span>
+        <pre><code class="language-c">setbkcolor(YELLOW);
+cleardevice(); // الآن صارت الخلفية صفراء</code></pre>
+    </div>
+
+    <div class="function-card" id="f13">
+        <div class="func-title">getcolor <span class="func-number">13</span></div>
+        <div class="info-grid">
+            <div class="info-item"><span class="label">الفكرة:</span><span>إرجاع رقم اللون الحالي للرسم (اللون الذي تم اختياره بـ <span class="syntax-box">setcolor</span>).</span></div>
+            <div class="info-item"><span class="label">الشكل العام:</span><span class="syntax-box">int c = getcolor();</span></div>
+            <div class="info-item"><span class="label">المعاملات:</span>
+                <ul class="params-list">
+                    <li>(لا يوجد)</li>
+                </ul>
+            </div>
+            <div class="note-text">ملاحظات: يستخدم لحفظ اللون مؤقتاً قبل تغييره ثم استعادته لاحقاً.</div>
+        </div>
+        <span class="example-label">مثال بسيط:</span>
+        <pre><code class="language-c">int old_c = getcolor(); // حفظ اللون القديم</code></pre>
+    </div>
+
+    <div class="function-card" id="f14">
+        <div class="func-title">getbkcolor <span class="func-number">14</span></div>
+        <div class="info-grid">
+            <div class="info-item"><span class="label">الفكرة:</span><span>إرجاع رقم لون الخلفية الحالي.</span></div>
+            <div class="info-item"><span class="label">الشكل العام:</span><span class="syntax-box">int bk = getbkcolor();</span></div>
+            <div class="info-item"><span class="label">المعاملات:</span>
+                <ul class="params-list">
+                    <li>(لا يوجد)</li>
+                </ul>
+            </div>
+            <div class="note-text">ملاحظات: يفيد عند الحاجة إلى تعيين لون حدود التعبئة ليكون مطابقاً للون الخلفية.</div>
+        </div>
+        <span class="example-label">مثال بسيط:</span>
+        <pre><code class="language-c">int bg = getbkcolor();
+setfillstyle(SOLID_FILL, bg); // استخدام نفس لون الخلفية للتعبئة</code></pre>
+    </div>
+
+    <div class="function-card" id="f15">
+        <div class="func-title">setfillstyle <span class="func-number">15</span></div>
+        <div class="info-grid">
+            <div class="info-item"><span class="label">الفكرة:</span><span>تحديد نمط (Pattern) ولون التعبئة للأشكال المغلقة.</span></div>
+            <div class="info-item"><span class="label">الشكل العام:</span><span class="syntax-box">setfillstyle(pattern, color);</span></div>
+            <div class="info-item"><span class="label">المعاملات:</span>
+                <ul class="params-list">
+                    <li><span class="syntax-box">pattern</span>: شكل التعبئة (مثل <span class="syntax-box">SOLID_FILL</span>, <span class="syntax-box">HATCH_FILL</span>).</li>
+                    <li><span class="syntax-box">color</span>: لون التعبئة.</li>
+                </ul>
+            </div>
+            <div class="note-text">ملاحظات: تُستخدم قبل دوال التعبئة مثل <span class="syntax-box">bar</span>, <span class="syntax-box">fillpoly</span>, و<span class="syntax-box">floodfill</span>.</div>
+        </div>
+        <span class="example-label">مثال بسيط:</span>
+        <pre><code class="language-c">setfillstyle(HATCH_FILL, RED); // تعبئة مشبكة حمراء</code></pre>
+    </div>
+
+    <div class="function-card" id="f16">
+        <div class="func-title">floodfill <span class="func-number">16</span></div>
+        <div class="info-grid">
+            <div class="info-item"><span class="label">الفكرة:</span><span>تعبئة منطقة مغلقة باللون والنمط المُختارين (كأنها دلو طلاء).</span></div>
+            <div class="info-item"><span class="label">الشكل العام:</span><span class="syntax-box">floodfill(x, y, border);</span></div>
+            <div class="info-item"><span class="label">المعاملات:</span>
+                <ul class="params-list">
+                    <li><span class="syntax-box">x, y</span>: نقطة داخل المنطقة المراد تعبئتها.</li>
+                    <li><span class="syntax-box">border</span>: لون الخط الحدودي للمنطقة.</li>
+                </ul>
+            </div>
+            <div class="note-text">ملاحظات: إذا كان اللون (color) داخل الدالة <span class="syntax-box">setfillstyle</span> مطابقاً للحدود (<span class="syntax-box">border</span>) فلن تعمل الدالة.</div>
+        </div>
+        <span class="example-label">مثال بسيط:</span>
+        <pre><code class="language-c">circle(100, 100, 30);
+floodfill(100, 100, WHITE); // تعبئة الدائرة البيضاء</code></pre>
+    </div>
+
+    <div class="function-card" id="f17">
+        <div class="func-title">setpalette <span class="func-number">17</span></div>
+        <div class="info-grid">
+            <div class="info-item"><span class="label">الفكرة:</span><span>تعديل درجة لون معين (Index) في النظام إلى لون آخر (Actual Color).</span></div>
+            <div class="info-item"><span class="label">الشكل العام:</span><span class="syntax-box">setpalette(index, color);</span></div>
+            <div class="info-item"><span class="label">المعاملات:</span>
+                <ul class="params-list">
+                    <li><span class="syntax-box">index</span>: رقم اللون المراد تعديله (مثل <span class="syntax-box">RED</span>).</li>
+                    <li><span class="syntax-box">color</span>: القيمة اللونية الجديدة (من 0 إلى 63).</li>
+                </ul>
+            </div>
+            <div class="note-text">ملاحظات: تستخدم في الأوضاع المتقدمة لتغيير الدرجات اللونية الأساسية (الباليت).</div>
+        </div>
+        <span class="example-label">مثال بسيط:</span>
+        <pre><code class="language-c">setpalette(4, 2); // رقم 4 (الأحمر) سيصبح رقم 2 (الأخضر)
+setcolor(RED); // سيستخدم الآن اللون الأخضر!</code></pre>
+    </div>
+
+    <!-- المجموعة 4: حركة المؤشر -->
+    <div class="group-header">4. التحكم في المؤشر (CP)</div>
+
+    <div class="function-card" id="f18">
+        <div class="func-title">moveto <span class="func-number">18</span></div>
+        <div class="info-grid">
+            <div class="info-item"><span class="label">الفكرة:</span><span>نقل المؤشر الرسومي <span dir="ltr">(CP)</span> إلى إحداثي س، ص <span dir="ltr">(x, y)</span> محدد دون رسم.</span></div>
+            <div class="info-item"><span class="label">الشكل العام:</span><span class="syntax-box">moveto(x, y);</span></div>
+            <div class="info-item"><span class="label">المعاملات:</span>
+                <ul class="params-list">
+                    <li><span class="syntax-box">x, y</span>: الإحداثيات الجديدة المطلقة للمؤشر.</li>
+                </ul>
+            </div>
+            <div class="note-text">ملاحظات: هذه تحدد نقطة البداية لدوال مثل <span class="syntax-box">lineto</span> و <span class="syntax-box">outtext</span>.</div>
+        </div>
+        <span class="example-label">مثال بسيط:</span>
+        <pre><code class="language-c">moveto(50, 50); // نقل المؤشر
+lineto(100, 50); // رسم خط من (50,50) إلى (100,50)</code></pre>
+    </div>
+
+    <div class="function-card" id="f19">
+        <div class="func-title">moverel <span class="func-number">19</span></div>
+        <div class="info-grid">
+            <div class="info-item"><span class="label">الفكرة:</span><span>نقل المؤشر الرسومي <span dir="ltr">(CP)</span> مسافة نسبية من موقعه الحالي.</span></div>
+            <div class="info-item"><span class="label">الشكل العام:</span><span class="syntax-box">moverel(dx, dy);</span></div>
+            <div class="info-item"><span class="label">المعاملات:</span>
+                <ul class="params-list">
+                    <li><span class="syntax-box">dx</span>: التغيير في إحداثي س (X).</li>
+                    <li><span class="syntax-box">dy</span>: التغيير في إحداثي ص (Y).</li>
+                </ul>
+            </div>
+            <div class="note-text">ملاحظات: الحركة نسبية. <span class="syntax-box">moverel(20, 0)</span> تعني تحرك 20 بكسل لليمين.</div>
+        </div>
+        <span class="example-label">مثال بسيط:</span>
+        <pre><code class="language-c">moveto(100, 100);
+moverel(0, 50); // يصبح الموقع (100, 150)</code></pre>
+    </div>
+
+    <!-- المجموعة 5: الرسم والأشكال -->
+    <div class="group-header">5. دوال الرسم والأشكال</div>
+
+    <div class="function-card" id="f20">
+        <div class="func-title">putpixel <span class="func-number">20</span></div>
+        <div class="info-grid">
+            <div class="info-item"><span class="label">الفكرة:</span><span>رسم نقطة واحدة (Pixel) باللون المختار.</span></div>
+            <div class="info-item"><span class="label">الشكل العام:</span><span class="syntax-box">putpixel(x, y, color);</span></div>
+            <div class="info-item"><span class="label">المعاملات:</span>
+                <ul class="params-list">
+                    <li><span class="syntax-box">x, y</span>: إحداثيات النقطة.</li>
+                    <li><span class="syntax-box">color</span>: لون النقطة.</li>
+                </ul>
+            </div>
+            <div class="note-text">ملاحظات: أساس الرسوميات. تستخدم في الخوارزميات الدقيقة مثل رسم خط بريسنهام.</div>
+        </div>
+        <span class="example-label">مثال بسيط:</span>
+        <pre><code class="language-c">putpixel(10, 10, WHITE); // رسم نقطة بيضاء في الأعلى اليسار</code></pre>
+    </div>
+
+    <div class="function-card" id="f21">
+        <div class="func-title">line <span class="func-number">21</span></div>
+        <div class="info-grid">
+            <div class="info-item"><span class="label">الفكرة:</span><span>رسم خط مستقيم بين نقطتين معلومتين.</span></div>
+            <div class="info-item"><span class="label">الشكل العام:</span><span class="syntax-box">line(x1, y1, x2, y2);</span></div>
+            <div class="info-item"><span class="label">المعاملات:</span>
+                <ul class="params-list">
+                    <li><span class="syntax-box">x1, y1</span>: نقطة البداية.</li>
+                    <li><span class="syntax-box">x2, y2</span>: نقطة النهاية.</li>
+                </ul>
+            </div>
+            <div class="note-text">ملاحظات: لا تعتمد على المؤشر <span dir="ltr">(CP)</span>، وتستخدم اللون المحدد بـ <span class="syntax-box">setcolor</span>.</div>
+        </div>
+        <span class="example-label">مثال بسيط:</span>
+        <pre><code class="language-c">line(0, 0, 100, 100); // رسم خط قطري</code></pre>
+    </div>
+
+    <div class="function-card" id="f22">
+        <div class="func-title">lineto <span class="func-number">22</span></div>
+        <div class="info-grid">
+            <div class="info-item"><span class="label">الفكرة:</span><span>رسم خط مستقيم من موقع المؤشر الحالي <span dir="ltr">(CP)</span> إلى نقطة جديدة.</span></div>
+            <div class="info-item"><span class="label">الشكل العام:</span><span class="syntax-box">lineto(x, y);</span></div>
+            <div class="info-item"><span class="label">المعاملات:</span>
+                <ul class="params-list">
+                    <li><span class="syntax-box">x, y</span>: الإحداثيات المطلقة لنقطة النهاية.</li>
+                </ul>
+            </div>
+            <div class="note-text">ملاحظات: بعد الرسم، يتم تحديث موقع المؤشر <span dir="ltr">(CP)</span> ليصبح هو نقطة النهاية <span dir="ltr">(x, y)</span>.</div>
+        </div>
+        <span class="example-label">مثال بسيط:</span>
+        <pre><code class="language-c">moveto(50, 50);
+lineto(150, 50); // يرسم خط أفقي، ويصبح المؤشر (150, 50)</code></pre>
+    </div>
+
+    <div class="function-card" id="f23">
+        <div class="func-title">linerel <span class="func-number">23</span></div>
+        <div class="info-grid">
+            <div class="info-item"><span class="label">الفكرة:</span><span>رسم خط مستقيم من موقع المؤشر الحالي <span dir="ltr">(CP)</span> بمسافة نسبية.</span></div>
+            <div class="info-item"><span class="label">الشكل العام:</span><span class="syntax-box">linerel(dx, dy);</span></div>
+            <div class="info-item"><span class="label">المعاملات:</span>
+                <ul class="params-list">
+                    <li><span class="syntax-box">dx, dy</span>: التغيير النسبي في الإحداثيات.</li>
+                </ul>
+            </div>
+            <div class="note-text">ملاحظات: مفيدة لرسم أشكال بسيطة دون الحاجة لحساب الإحداثيات النهائية في كل مرة.</div>
+        </div>
+        <span class="example-label">مثال بسيط:</span>
+        <pre><code class="language-c">moveto(100, 100);
+linerel(0, 50); // يرسم خط عمودي لأسفل بطول 50 بكسل</code></pre>
+    </div>
+
+    <div class="function-card" id="f24">
+        <div class="func-title">rectangle <span class="func-number">24</span></div>
+        <div class="info-grid">
+            <div class="info-item"><span class="label">الفكرة:</span><span>رسم إطار (حدود) مستطيل فارغ.</span></div>
+            <div class="info-item"><span class="label">الشكل العام:</span><span class="syntax-box">rectangle(left, top, right, bottom);</span></div>
+            <div class="info-item"><span class="label">المعاملات:</span>
+                <ul class="params-list">
+                    <li><span class="syntax-box">left, top</span>: إحداثيات الزاوية العلوية اليسرى.</li>
+                    <li><span class="syntax-box">right, bottom</span>: إحداثيات الزاوية السفلية اليمنى.</li>
+                </ul>
+            </div>
+            <div class="note-text">ملاحظات: لا يتم تعبئة المستطيل، ويتم الرسم بلون <span class="syntax-box">setcolor</span> وبنمط <span class="syntax-box">setlinestyle</span>.</div>
+        </div>
+        <span class="example-label">مثال بسيط:</span>
+        <pre><code class="language-c">rectangle(10, 10, 100, 50); // رسم صندوق فارغ</code></pre>
+    </div>
+
+    <div class="function-card" id="f25">
+        <div class="func-title">bar <span class="func-number">25</span></div>
+        <div class="info-grid">
+            <div class="info-item"><span class="label">الفكرة:</span><span>رسم مستطيل معبأ باللون والنمط المُحددين مسبقاً.</span></div>
+            <div class="info-item"><span class="label">الشكل العام:</span><span class="syntax-box">bar(left, top, right, bottom);</span></div>
+            <div class="info-item"><span class="label">المعاملات:</span>
+                <ul class="params-list">
+                    <li><span class="syntax-box">left, top</span>: الزاوية العلوية اليسرى.</li>
+                    <li><span class="syntax-box">right, bottom</span>: الزاوية السفلية اليمنى.</li>
+                </ul>
+            </div>
+            <div class="note-text">ملاحظات: يعتمد على إعدادات <span class="syntax-box">setfillstyle</span>. لا يرسم إطار خارجي بل يملأ فقط.</div>
+        </div>
+        <span class="example-label">مثال بسيط:</span>
+        <pre><code class="language-c">setfillstyle(SOLID_FILL, GREEN);
+bar(10, 10, 100, 50); // رسم مربع أخضر صلب</code></pre>
+    </div>
+
+    <!-- دالة جديدة: bar3d -->
+    <div class="function-card" id="f26">
+        <div class="func-title">bar3d <span class="func-number">26</span></div>
+        <div class="info-grid">
+            <div class="info-item"><span class="label">الفكرة:</span><span>رسم عمود/مستطيل ثلاثي الأبعاد معبأ.</span></div>
+            <div class="info-item"><span class="label">الشكل العام:</span><span class="syntax-box">bar3d(l, t, r, b, depth, topflag);</span></div>
+            <div class="info-item"><span class="label">المعاملات:</span>
+                <ul class="params-list">
+                    <li><span class="syntax-box">l, t, r, b</span>: إحداثيات الزوايا (مثل bar).</li>
+                    <li><span class="syntax-box">depth</span>: عمق العمود (بالبكسل).</li>
+                    <li><span class="syntax-box">topflag</span>: رسم سقف للعمود (1=نعم، 0=لا).</li>
+                </ul>
+            </div>
+            <div class="note-text">ملاحظات: يُستخدم لرسم المخططات البيانية ثلاثية الأبعاد.</div>
+        </div>
+        <span class="example-label">مثال بسيط:</span>
+        <pre><code class="language-c">bar3d(100, 100, 200, 250, 20, 1); // عمود بعمق 20</code></pre>
+    </div>
+
+    <div class="function-card" id="f27">
+        <div class="func-title">circle <span class="func-number">27</span></div>
+        <div class="info-grid">
+            <div class="info-item"><span class="label">الفكرة:</span><span>رسم دائرة فارغة بالإحداثيات ونصف القطر.</span></div>
+            <div class="info-item"><span class="label">الشكل العام:</span><span class="syntax-box">circle(x, y, r);</span></div>
+            <div class="info-item"><span class="label">المعاملات:</span>
+                <ul class="params-list">
+                    <li><span class="syntax-box">x, y</span>: إحداثيات مركز الدائرة.</li>
+                    <li><span class="syntax-box">r</span>: نصف قطر الدائرة.</li>
+                </ul>
+            </div>
+            <div class="note-text">ملاحظات: يتم الرسم باللون <span class="syntax-box">setcolor</span>.</div>
+        </div>
+        <span class="example-label">مثال بسيط:</span>
+        <pre><code class="language-c">circle(200, 200, 50); // دائرة بمركز (200, 200) ونصف قطر 50</code></pre>
+    </div>
+
+    <!-- دالة جديدة: arc -->
+    <div class="function-card" id="f28">
+        <div class="func-title">arc <span class="func-number">28</span></div>
+        <div class="info-grid">
+            <div class="info-item"><span class="label">الفكرة:</span><span>رسم قوس (جزء من دائرة) غير مغلق.</span></div>
+            <div class="info-item"><span class="label">الشكل العام:</span><span class="syntax-box">arc(x, y, st_ang, end_ang, r);</span></div>
+            <div class="info-item"><span class="label">المعاملات:</span>
+                <ul class="params-list">
+                    <li><span class="syntax-box">x, y</span>: مركز القوس.</li>
+                    <li><span class="syntax-box">st, end</span>: زاوية البداية والنهاية (درجات).</li>
+                    <li><span class="syntax-box">r</span>: نصف القطر.</li>
+                </ul>
+            </div>
+            <div class="note-text">ملاحظات: الزاوية 0 تقع عند الساعة 3 وتدور عكس عقارب الساعة.</div>
+        </div>
+        <span class="example-label">مثال بسيط:</span>
+        <pre><code class="language-c">arc(200, 200, 0, 90, 50); // رسم ربع دائرة (قوس)</code></pre>
+    </div>
+
+    <!-- دالة جديدة: pieslice -->
+    <div class="function-card" id="f29">
+        <div class="func-title">pieslice <span class="func-number">29</span></div>
+        <div class="info-grid">
+            <div class="info-item"><span class="label">الفكرة:</span><span>رسم قطاع دائري (شريحة فطيرة) معبأ.</span></div>
+            <div class="info-item"><span class="label">الشكل العام:</span><span class="syntax-box">pieslice(x, y, st, end, r);</span></div>
+            <div class="info-item"><span class="label">المعاملات:</span>
+                <ul class="params-list">
+                    <li>نفس معاملات <span class="syntax-box">arc</span>.</li>
+                </ul>
+            </div>
+            <div class="note-text">ملاحظات: يربط القوس بالمركز ويملأ الشكل بنمط <span class="syntax-box">setfillstyle</span>.</div>
+        </div>
+        <span class="example-label">مثال بسيط:</span>
+        <pre><code class="language-c">setfillstyle(SOLID_FILL, YELLOW);
+pieslice(200, 200, 0, 60, 100); // شريحة صفراء</code></pre>
+    </div>
+
+    <div class="function-card" id="f30">
+        <div class="func-title">ellipse <span class="func-number">30</span></div>
+        <div class="info-grid">
+            <div class="info-item"><span class="label">الفكرة:</span><span>رسم قوس أو شكل بيضاوي كامل.</span></div>
+            <div class="info-item"><span class="label">الشكل العام:</span><span class="syntax-box">ellipse(x, y, st, end, xr, yr);</span></div>
+            <div class="info-item"><span class="label">المعاملات:</span>
+                <ul class="params-list">
+                    <li><span class="syntax-box">x, y</span>: إحداثيات مركز الشكل.</li>
+                    <li><span class="syntax-box">st, end</span>: زاوية البداية والنهاية (بالدرجات).</li>
+                    <li><span class="syntax-box">xr, yr</span>: نصف القطر الأفقي والعمودي.</li>
+                </ul>
+            </div>
+            <div class="note-text">ملاحظات: لرسم شكل بيضاوي كامل، اجعل الزاويتين 0 و 360.</div>
+        </div>
+        <span class="example-label">مثال بسيط:</span>
+        <pre><code class="language-c">ellipse(200, 200, 0, 360, 100, 50); // شكل بيضاوي كامل</code></pre>
+    </div>
+
+    <div class="function-card" id="f31">
+        <div class="func-title">fillellipse <span class="func-number">31</span></div>
+        <div class="info-grid">
+            <div class="info-item"><span class="label">الفكرة:</span><span>رسم شكل بيضاوي معبأ (لا يمكن رسم قوس).</span></div>
+            <div class="info-item"><span class="label">الشكل العام:</span><span class="syntax-box">fillellipse(x, y, xr, yr);</span></div>
+            <div class="info-item"><span class="label">المعاملات:</span>
+                <ul class="params-list">
+                    <li><span class="syntax-box">x, y</span>: إحداثيات مركز الشكل.</li>
+                    <li><span class="syntax-box">xr, yr</span>: نصف القطر الأفقي والعمودي.</li>
+                </ul>
+            </div>
+            <div class="note-text">ملاحظات: لا يرسم حدوداً خارجية بل يملأ باللون والنمط المُختارين من <span class="syntax-box">setfillstyle</span>.</div>
+        </div>
+        <span class="example-label">مثال بسيط:</span>
+        <pre><code class="language-c">fillellipse(200, 200, 50, 25); // بيضاوي معبأ</code></pre>
+    </div>
+
+    <!-- دالة جديدة: sector -->
+    <div class="function-card" id="f32">
+        <div class="func-title">sector <span class="func-number">32</span></div>
+        <div class="info-grid">
+            <div class="info-item"><span class="label">الفكرة:</span><span>رسم قطاع بيضاوي معبأ (نسخة مطورة من pieslice).</span></div>
+            <div class="info-item"><span class="label">الشكل العام:</span><span class="syntax-box">sector(x, y, st, end, xr, yr);</span></div>
+            <div class="info-item"><span class="label">المعاملات:</span>
+                <ul class="params-list">
+                    <li><span class="syntax-box">xr, yr</span>: نصف القطر الأفقي والعمودي (مثل ellipse).</li>
+                </ul>
+            </div>
+            <div class="note-text">ملاحظات: يُستخدم لرسم شرائح بيضاوية الشكل.</div>
+        </div>
+        <span class="example-label">مثال بسيط:</span>
+        <pre><code class="language-c">sector(300, 200, 0, 120, 100, 50); // قطاع بيضاوي</code></pre>
+    </div>
+
+    <div class="function-card" id="f33">
+        <div class="func-title">drawpoly <span class="func-number">33</span></div>
+        <div class="info-grid">
+            <div class="info-item"><span class="label">الفكرة:</span><span>رسم حدود مضلع (Polygon) باستخدام قائمة نقاط.</span></div>
+            <div class="info-item"><span class="label">الشكل العام:</span><span class="syntax-box">drawpoly(points, array);</span></div>
+            <div class="info-item"><span class="label">المعاملات:</span>
+                <ul class="params-list">
+                    <li><span class="syntax-box">points</span>: عدد النقاط الكلي في المصفوفة.</li>
+                    <li><span class="syntax-box">array</span>: مصفوفة تحتوي الإحداثيات بالتتابع <span dir="ltr">(x1, y1, x2, y2, ...)</span>.</li>
+                </ul>
+            </div>
+            <div class="note-text">ملاحظات: لرسم مضلع مغلق، يجب تكرار نقطة البداية في نهاية المصفوفة.</div>
+        </div>
+        <span class="example-label">مثال بسيط:</span>
+        <pre><code class="language-c">int pts[] = {100,10, 200,100, 50,100, 100,10};
+drawpoly(4, pts); // رسم حدود مثلث مغلق (4 نقاط)</code></pre>
+    </div>
+
+    <div class="function-card" id="f34">
+        <div class="func-title">fillpoly <span class="func-number">34</span></div>
+        <div class="info-grid">
+            <div class="info-item"><span class="label">الفكرة:</span><span>رسم مضلع معبأ (يتم إغلاقه تلقائياً قبل التعبئة).</span></div>
+            <div class="info-item"><span class="label">الشكل العام:</span><span class="syntax-box">fillpoly(points, array);</span></div>
+            <div class="info-item"><span class="label">المعاملات:</span>
+                <ul class="params-list">
+                    <li><span class="syntax-box">points</span>: عدد النقاط الكلي في المصفوفة.</li>
+                    <li><span class="syntax-box">array</span>: مصفوفة الإحداثيات.</li>
+                </ul>
+            </div>
+            <div class="note-text">ملاحظات: لا تحتاج إلى تكرار نقطة البداية في النهاية، ويستخدم <span class="syntax-box">setfillstyle</span>.</div>
+        </div>
+        <span class="example-label">مثال بسيط:</span>
+        <pre><code class="language-c">int pts[] = {100,10, 200,100, 50,100};
+fillpoly(3, pts); // تعبئة المثلث بثلاث نقاط فقط</code></pre>
+    </div>
+
+    <div class="function-card" id="f35">
+        <div class="func-title">setlinestyle <span class="func-number">35</span></div>
+        <div class="info-grid">
+            <div class="info-item"><span class="label">الفكرة:</span><span>تغيير شكل الخط (سمك، نمط) للأشكال المرسومة.</span></div>
+            <div class="info-item"><span class="label">الشكل العام:</span><span class="syntax-box">setlinestyle(style, pattern, thick);</span></div>
+            <div class="info-item"><span class="label">المعاملات:</span>
+                <ul class="params-list">
+                    <li><span class="syntax-box">style</span>: نمط الخط (مثل <span class="syntax-box">SOLID_LINE</span>, <span class="syntax-box">DOTTED_LINE</span>).</li>
+                    <li><span class="syntax-box">pattern</span>: قيمة مخصصة (0 للأنماط القياسية).</li>
+                    <li><span class="syntax-box">thick</span>: سمك الخط (مثل <span class="syntax-box">NORM_WIDTH</span>, <span class="syntax-box">THICK_WIDTH</span>).</li>
+                </ul>
+            </div>
+            <div class="note-text">ملاحظات: تؤثر هذه الإعدادات على <span class="syntax-box">line</span>، <span class="syntax-box">circle</span>، <span class="syntax-box">rectangle</span>، إلخ.</div>
+        </div>
+        <span class="example-label">مثال بسيط:</span>
+        <pre><code class="language-c">setlinestyle(DOTTED_LINE, 0, THICK_WIDTH);
+line(0, 50, 200, 50); // خط منقط وسميك</code></pre>
+    </div>
+
+    <!-- المجموعة 6: النصوص -->
+    <div class="group-header">6. التعامل مع النصوص</div>
+
+    <div class="function-card" id="f36">
+        <div class="func-title">outtext <span class="func-number">36</span></div>
+        <div class="info-grid">
+            <div class="info-item"><span class="label">الفكرة:</span><span>كتابة نص في موقع المؤشر الرسومي الحالي <span dir="ltr">(CP)</span>.</span></div>
+            <div class="info-item"><span class="label">الشكل العام:</span><span class="syntax-box">outtext("Text");</span></div>
+            <div class="info-item"><span class="label">المعاملات:</span>
+                <ul class="params-list">
+                    <li><span class="syntax-box">"Text"</span>: النص المراد عرضه.</li>
+                </ul>
+            </div>
+            <div class="note-text">ملاحظات: بعد الكتابة، يتم تحديث المؤشر <span dir="ltr">(CP)</span> إلى نهاية النص المكتوب.</div>
+        </div>
+        <span class="example-label">مثال بسيط:</span>
+        <pre><code class="language-c">moveto(100, 100);
+outtext("Hello"); // كتابة "Hello" ابتداءً من (100, 100)</code></pre>
+    </div>
+
+    <div class="function-card" id="f37">
+        <div class="func-title">outtextxy <span class="func-number">37</span></div>
+        <div class="info-grid">
+            <div class="info-item"><span class="label">الفكرة:</span><span>كتابة نص في موقع س، ص <span dir="ltr">(x, y)</span> محدد بشكل مباشر.</span></div>
+            <div class="info-item"><span class="label">الشكل العام:</span><span class="syntax-box">outtextxy(x, y, "Text");</span></div>
+            <div class="info-item"><span class="label">المعاملات:</span>
+                <ul class="params-list">
+                    <li><span class="syntax-box">x, y</span>: إحداثيات بداية النص.</li>
+                    <li><span class="syntax-box">"Text"</span>: النص المراد عرضه.</li>
+                </ul>
+            </div>
+            <div class="note-text">ملاحظات: لا تعتمد على المؤشر <span dir="ltr">(CP)</span> ولا تغيّره.</div>
+        </div>
+        <span class="example-label">مثال بسيط:</span>
+        <pre><code class="language-c">outtextxy(50, 200, "Score: 100"); // كتابة في موقع ثابت</code></pre>
+    </div>
+
+    <div class="function-card" id="f38">
+        <div class="func-title">settextstyle <span class="func-number">38</span></div>
+        <div class="info-grid">
+            <div class="info-item"><span class="label">الفكرة:</span><span>تحديد شكل الخط (Font)، اتجاهه (Direction)، وحجمه (Size).</span></div>
+            <div class="info-item"><span class="label">الشكل العام:</span><span class="syntax-box">settextstyle(font, dir, size);</span></div>
+            <div class="info-item"><span class="label">المعاملات:</span>
+                <ul class="params-list">
+                    <li><span class="syntax-box">font</span>: نوع الخط (مثل <span class="syntax-box">TRIPLEX_FONT</span>).</li>
+                    <li><span class="syntax-box">dir</span>: اتجاه الخط (أفقي <span class="syntax-box">HORIZ_DIR</span> أو عمودي <span class="syntax-box">VERT_DIR</span>).</li>
+                    <li><span class="syntax-box">size</span>: عامل التكبير (1 للحجم الأصلي، 2 للتكبير مرتين، إلخ).</li>
+                </ul>
+            </div>
+            <div class="note-text">ملاحظات: يجب استدعاؤها قبل <span class="syntax-box">outtext</span> أو <span class="syntax-box">outtextxy</span> ليتم تطبيق النمط.</div>
+        </div>
+        <span class="example-label">مثال بسيط:</span>
+        <pre><code class="language-c">settextstyle(TRIPLEX_FONT, HORIZ_DIR, 3);
+outtext("Big Text"); // يظهر النص كبيراً 3 مرات</code></pre>
+    </div>
+
+    <div class="function-card" id="f39">
+        <div class="func-title">textwidth <span class="func-number">39</span></div>
+        <div class="info-grid">
+            <div class="info-item"><span class="label">الفكرة:</span><span>حساب عرض النص المحدد بالبكسل (Pixel Width).</span></div>
+            <div class="info-item"><span class="label">الشكل العام:</span><span class="syntax-box">int w = textwidth("Text");</span></div>
+            <div class="info-item"><span class="label">المعاملات:</span>
+                <ul class="params-list">
+                    <li><span class="syntax-box">"Text"</span>: النص المراد قياس عرضه.</li>
+                </ul>
+            </div>
+            <div class="note-text">ملاحظات: تستخدم أساساً لتوسيط النصوص في الشاشة. تأخذ في الاعتبار إعدادات <span class="syntax-box">settextstyle</span> الحالية.</div>
+        </div>
+        <span class="example-label">مثال بسيط:</span>
+        <pre><code class="language-c">int x_center = (getmaxx() - textwidth("GO")) / 2;
+outtextxy(x_center, 100, "GO"); // توسيط النص</code></pre>
+    </div>
+
+    <div class="function-card" id="f40">
+        <div class="func-title">textheight <span class="func-number">40</span></div>
+        <div class="info-grid">
+            <div class="info-item"><span class="label">الفكرة:</span><span>حساب ارتفاع النص المحدد بالبكسل (Pixel Height).</span></div>
+            <div class="info-item"><span class="label">الشكل العام:</span><span class="syntax-box">int h = textheight("Text");</span></div>
+            <div class="info-item"><span class="label">المعاملات:</span>
+                <ul class="params-list">
+                    <li><span class="syntax-box">"Text"</span>: النص المراد قياس ارتفاعه.</li>
+                </ul>
+            </div>
+            <div class="note-text">ملاحظات: تستخدم لترتيب النصوص عمودياً (سطر تلو سطر) بشكل دقيق مع مراعاة حجم الخط.</div>
+        </div>
+        <span class="example-label">مثال بسيط:</span>
+        <pre><code class="language-c">int h = textheight("Line");
+outtextxy(10, 10, "Line 1");
+outtextxy(10, 10 + h, "Line 2"); // بدء السطر الثاني تحت الأول تماماً</code></pre>
+    </div>
+
+    <div class="function-card" id="f41">
+        <div class="func-title">sprintf <span class="func-number">41</span></div>
+        <div class="info-grid">
+            <div class="info-item"><span class="label">الفكرة:</span><span>تنسيق وكتابة البيانات (أرقام، متغيرات) إلى سلسلة نصية (String).</span></div>
+            <div class="info-item"><span class="label">الشكل العام:</span><span class="syntax-box">sprintf(buffer, "format", variable, ...);</span></div>
+            <div class="info-item"><span class="label">المعاملات:</span>
+                <ul class="params-list">
+                    <li><span class="syntax-box">buffer</span>: مصفوفة الأحرف التي سيتم تخزين النص المنسق فيها.</li>
+                    <li><span class="syntax-box">"format"</span>: شكل التنسيق (مثل <span class="syntax-box">"%d"</span> للأعداد الصحيحة).</li>
+                    <li><span class="syntax-box">variable</span>: المتغيرات المراد تنسيقها.</li>
+                </ul>
+            </div>
+            <div class="note-text">ملاحظات: لا ترسم النص مباشرة، بل تعدّه. يجب استخدام <span class="syntax-box">outtext</span> أو <span class="syntax-box">outtextxy</span> لعرضه لاحقاً.</div>
+        </div>
+        <span class="example-label">مثال بسيط:</span>
+        <pre><code class="language-c">char buffer[30];
+int score = 100;
+sprintf(buffer, "Score: %d", score); // buffer يصبح "Score: 100"
+outtextxy(10, 10, buffer); // طباعة النتيجة</code></pre>
+    </div>
+
+    <!-- الملخص النظري السريع (المجموعة 7) -->
+    <div class="theory-summary">
+        <a id="theory-summary"></a>
+        <div class="group-header">7. ملخص نظري سريع</div>
+
+        <h3>أساسيات التهيئة والتحكم</h3>
+        <p>لبدء العمل مع الرسوميات، تحتاج لتهيئة وضع <span class="syntax-box">BGI</span>. استخدم دائماً <span class="syntax-box">DETECT</span> كقيمة لمشغّل الرسوميات (<span class="syntax-box">gd</span>) ليقوم النظام باكتشاف الإعدادات الأفضل تلقائياً. تأكد من إغلاق النظام بـ <span class="syntax-box">closegraph()</span> في النهاية.</p>
+        
+        <h3>نظام الإحداثيات والقياسات</h3>
+        <p>في مكتبة <span class="syntax-box">graphics.h</span>، نقطة الأصل <span dir="ltr">(0, 0)</span> تقع في الزاوية <strong>العلوية اليسرى</strong> من الشاشة.</p>
+        <ul>
+            <li><strong>المحور <span dir="ltr">X</span> (الأفقي):</strong> يبدأ من 0 ويزداد كلما اتجهنا لليمين.</li>
+            <li><strong>المحور <span dir="ltr">Y</span> (العمودي):</strong> يبدأ من 0 ويزداد كلما اتجهنا لأسفل.</li>
+        </ul>
+        <p>يمكنك استخدام <span class="syntax-box">getmaxx()</span> و <span class="syntax-box">getmaxy()</span> لتحديد حجم منطقة الرسم الحالية لتوسيط الأشكال.</p>
+        <p></p>
+
+        <h3>الألوان الأساسية (0 - 15)</h3>
+        <p>تعتمد المكتبة على استخدام أرقام لتمثيل الألوان الأساسية. القيمة الافتراضية للرسم هي الأبيض (15) وللخلفية هي الأسود (0).</p>
+        <p><strong>أرقام الألوان الشائعة:</strong></p>
+        <ul>
+            <li>0: BLACK (أسود)</li>
+            <li>1: BLUE (أزرق)</li>
+            <li>2: GREEN (أخضر)</li>
+            <li>3: CYAN (سماوي)</li>
+            <li>4: RED (أحمر)</li>
+            <li>5: MAGENTA (أرجواني)</li>
+            <li>6: BROWN/YELLOW (بني/أصفر)</li>
+            <li>7: LIGHTGRAY (رمادي فاتح)</li>
+            <li>15: WHITE (أبيض)</li>
+        </ul>
+        <p></p>
+        
+        <h3>المؤشر الرسومي (Current Position - CP)</h3>
+        <p>المؤشر الرسومي هو إحداثي س، ص <span dir="ltr">(x, y)</span> داخلي يتم تتبعه بواسطة النظام. دوال مثل <span class="syntax-box">moveto</span> و<span class="syntax-box">lineto</span> و<span class="syntax-box">outtext</span> تغير موقعه، بينما دوال مثل <span class="syntax-box">line</span> و<span class="syntax-box">circle</span> لا تغيره.</p>
+
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-clike.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js"></script>
+
+    <!-- سكربت زر الصعود للأعلى -->
+    <script>
+        // الحصول على الزر
+        var mybutton = document.getElementById("scrollTopBtn");
+
+        // عند نزول المستخدم 20 بكسل من الأعلى، أظهر الزر
+        window.onscroll = function() {scrollFunction()};
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+
+        // عند الضغط على الزر، اصعد للأعلى
+        function topFunction() {
+            document.body.scrollTop = 0; // لمتصفح سفاري
+            document.documentElement.scrollTop = 0; // لكروم، فايرفوكس، إيدج
+        }
+    </script>
+</body>
+</html>
